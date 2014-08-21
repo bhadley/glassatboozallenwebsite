@@ -174,7 +174,7 @@ myFB.child(tag).child("text").set(protocolText);
        
         <div id="formInput">
           <h2>Text Based Information Entry</h2>Title 
-          <input class="form-control" type="title" id="title" value="DNA Purification from Blood or Body Fluids">
+          <input class="form-control" type="title" id="title" >
           <br>
           Select Trigger
           <form id="triggerForm">
@@ -195,27 +195,7 @@ myFB.child(tag).child("text").set(protocolText);
           <br>
           Text  
           <br>
-          <textarea name="text"  class="form-control" rows="18" id="text" placeholder="1. Type text here">1. Preparation of previously unused Reagents. Add 1.2 ml protease solvent into vial of lyophilized protease (store at +4). Add appropriate amount of 96-100% EtOH to Buffers AW1 and AW2 (store at room temp).
-            2. Pipet 20 ul Protease into bottom of a 1.5 ml tube.
-            3. Add 200 ul sample to the tube.
-            4. Add 200 ul Buffer AL to the sample. Mix by pulse-vortexing for 15 s.
-            5. Incubate at 56°C for 10 min. 
-            6. Briefly centrifuge tube to remove drops from the inside of the lid.
-            7. Add 200 ul EtOH (96-100%) to the sample, and mix again by pulse-vortexing for 15 s. After mixing, briefly centrifuge tube to remove drops from inside of the lid. 
-            8. Carefully apply the mixture from Step 7 to the QIAamp Mini spin column (in a 2 ml collection tube) without wetting the rim. Close the cap and spin at 6k x g for 1 min. 
-            9. Place the spin column in a clean 2 ml collection tube and discard the tube containing the filtrate. 
-            10. Carefully open spin column and add 500 ul Buffer AW1 w/o wetting rim. Close and spin at 6k x g for 1 min.
-            11. Place the spin column in a clean 2 ml collection tube and discard the tube containing the filtrate. 
-            12. Carefully open spin column and add 500 ul Buffer AW2 w/o wetting rim. Close and spin at full speed (20k x g) for 1 min.
-            13. Place the spin column in a clean 2 ml collection tube and discard the tube containing the filtrate. Spin again at full speed (20k x g) for 3 min. 
-            14. Place the spin column in a clean 1.5 ml microcentrifuge tube and discard the tube containing the filtrate. 
-            15. Carefully open and add 200 ul Buffer AE, incubate at room temp for 1 min, and then spin down at 6k x g for 1 min. 
-            16. DNA extraction complete.</textarea><br> 
-
-
-            
-
-
+          <textarea name="text"  class="form-control" rows="18" id="text" placeholder="1. Type text here"></textarea><br> 
             <br><br><br>
             <input type="submit" class="btn btn-primary" value="Submit" onclick="getProtocol()">
           </div>
@@ -229,9 +209,9 @@ myFB.child(tag).child("text").set(protocolText);
           <div id="helpText">
             <p>Here is a simple data entry tool where you can enter a linear sequence of information that you'd like displayed on Glass.
               <br><br>
-              Glass will show the first step of your instructions as soon as you look at a visual cue, which can either be a QR code associated with your instructions or an image. Select which visual cue to use. Once you submit, you can download and save the image.
+              Glass will show the first step of your instructions as soon as you look at a visual cue, which can either be a QR code or an image. Select which visual cue to use. Once you submit, you can download and save the image.
               <br><br>
-              Here you will enter the sequential information. Each step should start with the step number, a period, and the step then a new line and the next step.
+              Enter the text you'd like displayed in the text box (you can copy+paste). Each step should start with the step number, a period, and the step then a new line and the next step.
               <br><br>
               If you'd like Glass to set a timer on a particular step, use this format on that step: #. step text <code>{timer: description of timer, number of seconds} </code>
             </p>

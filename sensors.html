@@ -354,18 +354,18 @@ xAxis.render();
           </div>
         </div>
 
-        
+    <div class="bodyText">    
         <div class="container">
 
           <div class="row">
             <div class="col-md-6">
               <h2>Stream Data Live from Glass</h2>
-              <p>Glass is equiped with a number of sensors - accelerometer, gyroscope, compass, light. Never before have these sensors been mounted so securely, and comfortably on the head. The possibilities are endless. Click to see a live stream of the acceleromter data.</p>
+              <p>Glass is equipped with a number of sensors - accelerometer, gyroscope, compass, camera, microphone. Never before have these sensors been mounted so securely, and comfortably, on the head. The possibilities are endless. Click to see a live stream of the acceleromter data.</p>
               <p><a class="btn btn-default" onclick="feature1()" role="button">View Demo &raquo;</a></p>
             </div>
             <div class="col-md-6">
               <h2>Stream Data Live from a Bluetooth Sensor</h2>
-              <p>Glass is even more powerful because it "plays nicely" with bluetooth sensors, opening up a wide range of potential applications. Click to see a demo live data streamed from a TI SensorTag. </p>
+              <p>Glass is even more powerful because it "plays nicely" with bluetooth sensors, opening up a wide range of potential applications. Click to see a demo of live data streamed from a TI SensorTag. </p>
               <p><a class="btn btn-default" onclick="feature2()" role="button">View Demo &raquo;</a></p>
             </div>
 
@@ -417,11 +417,11 @@ xAxis.render();
             <p> To demonstrate the capability of streaming data in realtime from Glass, we built a demo that counts your steps as you walk. On glass, run the app <code> Log Data </code> and you should soon see accelerometer data plotted live on the graph in gray. Select which axis to plot using the x, y, and z buttons. You can download a text file of the data, which is in the following format: <code> elapsed time in seconds, x, y, z </code>. We use a simple approximation algorithm to count your steps (as explained below). This yields periodic peaks, or steps, shown in blue on the plot. Clearly, this is a very simple approximation, but it yields surprisingly accurate results. The true value in this demo is in realizing the capability of the process - data can be streamed from Glass, analyzed and processed, and displayed on a webpage, all in realtime.</p>
           </div>
           <div class="col-md-4">
-            <img src="images/pedometer.png" width="400px" class="img-rounded">
+            <img src="images/dataplot.png" width="400px" class="img-rounded">
           </div>
         </div>
         <h4>Demonstration of Processing Algorithm</h4>
-        <img src="images/dataProcessingPic.png" width="700px" class="img-rounded">
+        <img src="images/pedometer.png" width="700px" class="img-rounded">
         <p> This graph demonstrates the simple processing algorithm we use to "clean up" the accelerometer data and identify steps. In gray is the raw accelerometer signal, and in green is the derivative of that signal squared. You can see how this clarifies the peaks. We then use a timed window to extract a step from the signal.</p>
 
 
@@ -443,6 +443,7 @@ xAxis.render();
         </div>
 
       </div>
+    </div>
       <script src="bootstrap/js/bootstrap.min.js"></script>
 
     </body>

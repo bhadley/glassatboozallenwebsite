@@ -97,7 +97,7 @@ function tutorial3() {
     <div class="col-md-4">
 
       <h3>Need to purify DNA? Easy!</h3>
-      <p><i>Purifying DNA from blood is a common task in many labs. This demo shows how you can save this protocol to our databse. You can then run an app on Google Glass that scans that code, and the protocol is displayed. </i></p>
+      <p><i>Purifying DNA from blood is a common task in many labs. This demo shows how you can use this site to save this protocol to our databsse. You can then run an app on Google Glass that scans a QR code, and the protocol is displayed. </i></p>
 
     </div>
     <div class="col-md-4">
@@ -107,7 +107,7 @@ function tutorial3() {
     </div>
     <div class="col-md-4">
       <h3>Great! A delivery...now what?</h3>
-      <p><i>A common occurance in labs is delivery of packages. When a package comes in, it must be processed according to a special set of instructions, and how you process the package will depend on what the package is. You can use our site to input this yes/no decision tree struction, then proceed through the instructions on Glass by nodding for yes and shaking your head for no. </i></p>
+      <p><i>A common occurance in labs is delivery of packages. When a package comes in, it must be processed according to a special set of instructions. Time and Money could be lost if the package is sorted incorrectly. You can use our site to help you ensure you're sorting your package correctly. </i></p>
 
     </div>
   </div>
@@ -132,6 +132,7 @@ function tutorial3() {
      <p>
       The protocol we'll be using in this example is the <a href="http://www.qiagen.com/products/catalog/sample-technologies/dna-sample-technologies/genomic-dna/qiaamp-dna-mini-kit" target="_blank"> DNA Purification from Blood or Body Fluids (Spin Protocol)</a>, provided to us by Sean Courtney.
     </p> 
+
     <br>
 
     <div class="container">
@@ -143,10 +144,10 @@ function tutorial3() {
               </p>
             </li>
             <li class="list-group-item">
-              <p>Enter the title,  DNA Purification from Blood or Body Fluids. The image trigger is the image that Glass will associate with this protocol. This image can be a qr code or a regular image. Select qr code.</p>
+              <p>Enter the title,  DNA Purification from Blood or Body Fluids. The image trigger is the image that Glass will associate with this protocol. This image can be a QR code or a regular image. Select QR code.</p>
             </li>
             <li class="list-group-item">
-              <p>Copy and paste the protocol text into the text box area. Each step must begin with a number, and there must be a newline between steps. To display timers, follow the format <code>{timer: name,  seconds} </code></p>
+              <p>Copy and paste the protocol text below into the text box area. Each step must begin with a number, and there must be a newline between steps. To display timers, follow the format <code>{timer: name,  seconds} </code></p>
               <div class="protocolText">
                 1. Preparation of previously unused Reagents. Add 1.2 ml protease solvent into vial of lyophilized protease (store at +4). Add appropriate amount of 96-100% EtOH to Buffers AW1 and AW2 (store at room temp).<br>
                 2. Pipet 20 ul Protease into bottom of a 1.5 ml tube.<br>
@@ -167,7 +168,7 @@ function tutorial3() {
               </div>
               <li class="list-group-item">
           
-                    <p>You can associate images or diagrams with steps in the protocol. Remember that Glass has a small screen, with resolution 640x360 pixels. Try to divide larger images into smaller ones that fit this aspect ratio before loading them to Glass. For this protocol, we'll use this image on step 12: </p>
+                    <p>You can associate images or diagrams with steps in the protocol. Remember that Glass has a small screen, with a resolution of 640x360 pixels. Try to divide larger images into smaller ones that fit this aspect ratio before loading them to Glass. For this protocol, we'll use this image on step 12: </p>
                     <img src="images/step12Image.png" width="300">
                     
                     <p> To associate a certain step number with an image, just click the <code> Add Image </code> button, enter the step number, and select the image using the <code> Choose File </code> button.
@@ -176,11 +177,13 @@ function tutorial3() {
                       <p>Your protocol should now be ready, click <code> Submit </code> to save it to our database. </p>
                     </li>
                     <li class="list-group-item">
-                      <p>You will then see the QR code you can use to pull up this protocol with Google Glass. Click the <code> Download Image </code> link to download and save it to your computer. You can print this, laminate it, and tape it to your work station. Or tape it to a binder you use in the lab. Now grab your Google Glass, and head to the lab! </p>
+                      <p>You will then see the QR code you can use to pull up this protocol with Google Glass. Click the <code> Download Image </code> link to download and save it to your computer. You can print this, laminate it, and tape it to your work station. Now grab your Google Glass, don your safety gear, and head to the lab! </p>
                       <img src="images/submissionSuccess.png" width="300">
                     </li>
                     <li class="list-group-item">
-                      <p>Put Glass on and ensure it's awake. On the Glass homescreen, say "ok glass", then "My Scan". This will launch the camera activity, and you will see what Glass sees in the screen. Now look at the qr code you downloaded. It will be recognized instantly, and Glass will chime cheerfully. 
+                           <div class="alert alert-info" role="alert">Ensure that your Glass is connected to the internet before continuing.</div>         
+                      <p>Put Glass on and ensure it's awake. On the Glass homescreen, say "ok glass", then "My Scan". This will launch the scanning activity, and you will see what Glass sees in the screen. Now look at the qr code you downloaded. It will be recognized instantly, and Glass will chime cheerfully. </p>
+
                       </li>
                       <li class="list-group-item">
                         <p>You'll then momentarily see a "Loading..." screen, while Glass downloads the data from the database. Soon, the first step in the protocol will be displayed. Proceed to the next step by looking right, go back by looking left..<p>
@@ -217,7 +220,7 @@ function tutorial3() {
 
           <div id="tutorial2"> 
            <hr class="featurette-divider">
-           <h1>Saving Safety Information for a Machine</h1>
+           <h1>Saving Safety Information</h1>
            <p>
             This tutorial demonstrates how you can use the text information tool to save safety information for the PCR (DNA amplifier) machine common in many labs. We'll be using as reference the safety information provided <a href="http://www.uvm.edu/~esf/pcr_safety.pdf"  target="_blank">here</a>.
           </p> 
@@ -230,15 +233,15 @@ function tutorial3() {
                     </p>
                   </li>
                   <li class="list-group-item">
-                    <p>Enter a title for this information, such as "PCR Safety Information". The image trigger is the image that Glass will associate with this protocol. Select qr code, which is what you'll later print out and tape to the machine.</p>
+                    <p>Enter a title for this information, such as "PCR Safety Information". The image trigger is the image that Glass will associate with this protocol. Select QR code, which is what you'll later print out and tape to the machine.</p>
                   </li>
                   <li class="list-group-item">
                     <p>Copy and paste the following series of operating instructions and safety information into the text input. </code></p>
                     <div class="protocolText">
-                     1. Acrylamide/Acetamide: No skin contact is permitted. Wear gloves whil handling acrylamide materials. <br>
-                     2. Butanol: No skin contact is allowed. Use gloves made of butyl, viton, or teglon for prolonged exposure (8+hrs) or neoprene for 4hr exposures.<br>
-                     3. Chloroform: Chlorogorm is used in DNA extractions. Sometimes the extractions use equal parts phenol and chloroform. If so, ensure tha tthe requirements for phenol are also met. All procedures should be conducted inside a chamical fume hood, gloves should be worn. <br>
-                     4. Phenol: Phenol can cuase severe burns to the skin, thus no skin contact is allowed. Glove material should be made of viton or saranex for 8hr exposures and butyl, neoprene, or teflon for 4hr exposures. Eye goggles/face shield should also be worn.<br>
+                     1. Acrylamide/Acetamide: No skin contact is permitted. Wear gloves while handling acrylamide materials. <br>
+                     2. Butanol: No skin contact is allowed. Use gloves made of butyl, viton, or teflon for prolonged exposure (8+hrs) or neoprene for 4hr exposures.<br>
+                     3. Chloroform: Chloroform is used in DNA extractions. Sometimes the extractions use equal parts phenol and chloroform. If so, ensure that the requirements for phenol are also met. All procedures should be conducted inside a chemical fume hood, gloves should be worn. <br>
+                     4. Phenol: Phenol can cause severe burns to the skin, thus no skin contact is allowed. Glove material should be made of viton or saranex for 8hr exposures and butyl, neoprene, or teflon for 4hr exposures. Eye goggles/face shield should also be worn.<br>
                    </div>
                    <li class="list-group-item">
                     <p>Your information should now be ready, click <code> Submit </code> to save it to our database. </p>
@@ -248,7 +251,8 @@ function tutorial3() {
                     <img src="images/submissionSuccess.png" width="300">
                   </li>
                   <li class="list-group-item">
-                    <p>Put Glass on and ensure it's awake. On the Glass homescreen, say "ok glass", then "My Scan". This will launch the camera activity, and you will see what Glass sees in the screen. Now look at the qr code you downloaded. It will be recognized instantly, and Glass will chime cheerfully. 
+                       <div class="alert alert-info" role="alert">Ensure that your Glass is connected to the internet before continuing.</div>  
+                    <p>Put Glass on and ensure it's awake. On the Glass homescreen, say "ok glass", then "My Scan". This will launch the scanning activity, and you will see what Glass sees in the screen. Now look at the QR code you downloaded. It will be recognized instantly, and Glass will chime cheerfully. 
                     </li>
                     <li class="list-group-item">
                       <p>You'll then momentarily see a "Loading..." screen, while Glass downloads the data from the database. Soon, the first piece of safety information will be displayed. Continue to the next piece by rotating your head right, or tapping Glass.<p>
@@ -324,7 +328,7 @@ function tutorial3() {
                                 </div>
                               </li>
                               <li class="list-group-item">
-                                <p> You must input these instructions to our site in a format Glass will understand. We have built a visual user interface to help you do that, which allows you to literally build a decision tree on the screen. Read the instructions on how to manipulate the diagram, then create a diagram similar to the following:
+                                <p> You must input these instructions to our site in a format Glass will understand. We have built a graphical user interface to help you do that, which allows you to literally build a decision tree on the screen. Read the instructions on how to manipulate the diagram, then create a diagram similar to the following:
                                 </p>
                                 <img src="images/labDiagram.png" width="100%">
                               </li>
@@ -334,15 +338,16 @@ function tutorial3() {
 
                               </li>
                               <li class="list-group-item">
-                                <p>You will then see the package image code you can use to pull up this protocol with Google Glass. Click the <code> Download Image </code> link to download and save it to your computer. You can print this, laminate it, and tape it to the area where you receive packages. Or tape it to a binder you use in the lab. Now grab your Google Glass, and head to that package! </p>
+                                <p>You will then see the package image code you can use to pull up this protocol with on Google Glass. Click the <code> Download Image </code> link to download and save it to your computer. You can print this, laminate it, and tape it to the area where you receive packages. Or tape it to a binder you use in the lab. Now grab your Google Glass, and head to that package! </p>
                                 <img src="images/packageSuccess.png" width="300">
                               </li>
 
                               <li class="list-group-item">
-                                <p>Put Glass on and ensure it's awake. On the Glass homescreen, say "ok glass", then "My Scan". This will launch the camera activity, and you will see what Glass sees in the screen. Now look at the qr code you downloaded. It will be recognized instantly, and Glass will chime cheerfully. 
+                                   <div class="alert alert-info" role="alert">Ensure that your Glass is connected to the internet before continuing.</div>  
+                                <p>Put Glass on and ensure it's awake. On the Glass homescreen, say "ok glass", then "My Scan". This will launch the scanner activity, and you will see what Glass sees in the screen. Now look at the QR code you downloaded. It will be recognized instantly, and Glass will chime cheerfully. 
                                 </li>
                                 <li class="list-group-item">
-                                  <p>You'll then momentarily see a "Loading..." screen, while Glass downloads the data from the database. Soon, the first step in the protocol will be displayed. To proceed to the next step, rotate your head to the right. To go back, move your head to the left. If you've added a timer to a step, that timer will be displayed in a pop-up text box, as seen below. This will occur even if you've moved past the step that launched the timer. If you've added an image, that image will appear on a screen after the text for that step.<p>
+                                  <p>You'll then momentarily see a "Loading..." screen, while Glass downloads the data from the database. Soon, the first step in the protocol will be displayed. To respond with a yes to the question, nod your head yes. To respond no, shake your head no. If you've added a timer to a step, that timer will be displayed in a pop-up text box, as seen below. This will occur even if you've moved past the step that launched the timer. If you've added an image, that image will appear on a screen after the text for that step.<p>
                                     <div class="row">
                                      <div class="col-md-4">
                                       <img src="images/package1.png" height="200" width="330">
@@ -363,7 +368,7 @@ function tutorial3() {
                                   </div> 
                                 </li>
                                 <li class="list-group-item">
-                                  <p>That's it! You can load up another protocol easily by following the same steps above. New QR codes will be automatically generated for each protocol you create.
+                                  <p>That's it! You can load up another diagram easily by following the same steps above. New QR codes will be automatically generated for each diagram you create.
                                   </li>
 
                                 </ol>
