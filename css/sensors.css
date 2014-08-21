@@ -1,0 +1,95 @@
+
+
+#forDebugging {
+	display:none;
+}
+
+.jumbotron {
+    margin-bottom: 0px;
+    top:0px;
+    left:0px;
+    background-position: 0% 0%;
+    padding-top: 100px;
+    padding-left: 100px;
+    height: 250px;
+    background-color:gray;
+    color:black;
+
+}
+button:focus {outline:0 !important;}
+.downloadDataButton {
+	padding-left:40px;
+	padding-right:40px;
+}
+
+.graphs {
+	padding-top:50px;
+	padding-left:10%;
+	display:inline-block;
+	position:relative;
+}
+
+#humidityGauge {
+	padding-left:40px;
+}
+
+#y_axis {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 40px;
+}
+
+div, span, p, td {
+	font-family: Arial, sans-serif;
+}
+
+
+#chart {
+	display: inline-block;
+	position: relative;
+	left: 40px;
+}
+
+h3 {
+    display: inline;
+}
+
+#legend {
+	display: inline-block;
+	position: relative;
+	left: 8px;
+}
+#legend_container {
+	position: absolute;
+	right: 0;
+	bottom: 26px;
+	width: 0;
+}
+#chart_container {
+	float: left;
+	position: relative;
+	padding-bottom:25px;
+}
+
+#infoText {
+	padding-left:10%;
+	padding-right:10%;
+	padding-top:5%;
+	padding-bottom:10%;
+}
+
+.featurette-divider {
+  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.featurette {
+	padding-left:100px;
+}

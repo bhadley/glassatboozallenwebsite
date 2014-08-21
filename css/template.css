@@ -1,0 +1,13 @@
+
+
+
+#forDebugging {
+	display:none;
+}
+
+.jumbotron {
+    margin-bottom: 0px;
+    top:0px;
+    left:0px;
+    background-position: 0% 0%;
+}

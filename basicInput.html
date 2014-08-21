@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="favicon.ico">
+
+  <title>Glass@BoozAllen</title>
+  <script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.17/firebase.js'></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+  <!-- Bootstrap core CSS -->
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/carousel.css" rel="stylesheet">
+  <link href="css/basicInput.css" rel="stylesheet">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="js/header.js"></script>
+  <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+  <script src="js/result.js"></script>
+  <script src="js/inputPage.js"></script>
+  <script type="text/javascript">
+
+  var myFB = new Firebase("https://labapp.firebaseio.com/input/");
+  var fb = new Firebase("https://labapp.firebaseio.com/");
+  var numProtocolsInFB = 2;
+  var qrReferenceNum;
+  var img;
+  $(document).ready(function() {
+    
+    document.getElementById("texthere").classList.add("active");
+
+    fb.on('value', function (snapshot) {
+      qrReferenceNum = snapshot.child("QRNum").val();
+    });
+
+    hideAfterForm();
+
+    var button = document.getElementById('download');
+    button.addEventListener('click', function() {
+      doDownload(this, 0);
+
+    });
+
+
+    var imageButton = document.getElementById("addImage");
+    imageButton.addEventListener('click', function() {
+
+      var stepNum = document.createElement("input");
+      stepNum.placeholder = "Step #";
+      stepNum.setAttribute("size",3); 
+      stepNum.className = "" 
+
+      var fileName = document.createElement("input");
+      fileName.setAttribute("type", "file");
+
+      var newLineDiv = document.createElement('div')
+      newLineDiv.appendChild(stepNum);
+      newLineDiv.appendChild(fileName);
+      linebreak = document.createElement("br");
+      newLineDiv.appendChild(linebreak);
+      document.getElementById("addImageArea").appendChild(newLineDiv);
+//<span>1.</span><input type="file" name="fileselect" id="fileselect"></input>
+//<span>1.</span><input type="file" name="fileselect" id="fileselect"></input>
+
+});
+
+  });
+
+
+function getProtocol() {
+  Parse.initialize("nOAglaRvFGCCKyXx1HunXjwGS6YFmcqgiO9XqFIp", "zh5ZRXO5UXblS1ZHgHVEIQIEFaQBGkP83AGnlTzP");
+
+  var stepNums = [];
+  var imageAreaDiv = document.getElementById("addImageArea");
+  var divs = imageAreaDiv.getElementsByTagName('div');
+  var divArray = [];
+  var parseObjects = [];
+  if (divs.length > 0) {
+    for (var i = 0; i < divs.length; i += 1) {
+      stepNum =  divs[i].childNodes[0].value ;
+
+
+      file = divs[i].childNodes[1].files[0] ;
+
+
+      var name = stepNum+".jpg";
+
+      var parseFile = new Parse.File(name, file);
+      var jobApplication = new Parse.Object("Photos");
+      jobApplication.set("stepNum", stepNum);
+      jobApplication.set("photo", parseFile);
+      parseObjects.push(jobApplication);
+      stepNums.push(stepNum);
+
+
+    }
+    var tag ;
+
+  // alert(ids["3"]);
+  var ids = {};
+  Parse.Object.saveAll(parseObjects, {
+    success: function(list) {
+  // All the objects were saved.
+  // stepNum: id
+
+  for (var i = 0; i<list.length;i++) {
+    ids[stepNums[i]] = list[i].id;
+    
+  }
+
+  myFB.child(tag).child("imageMap").set(ids);
+
+},
+error: function(error) {
+  // An error occurred while saving one of the objects.
+},
+});
+}
+reviewAfterFormHidePrevious();
+
+//var form = document.getElementById("protocolForm");
+var protocolTitle = document.getElementById("title").value;
+
+if ( protocolTitle == "" ) { 
+  protocolTitle="default"
+}
+var protocolText =  "SIMPLE " + protocolTitle + " " + document.getElementById("text").value;
+//myFB.child(numProtocolsInFB.toString()).set(protocolText);
+
+var form = document.getElementById("triggerForms");
+
+if (document.getElementById('qrCodeSelect').checked == true) {
+  popup();
+  tag = qrReferenceNum;
+}
+else {
+
+  var e = document.getElementById("imageSelect");
+  tag = e.options[e.selectedIndex].text;
+
+  img=document.createElement("img");
+  img.src="images/"+ tag+".jpg"
+
+  var foo = document.getElementById("imageCue");
+  foo.appendChild(img);
+
+
+}
+
+myFB.child(tag).child("text").set(protocolText);
+
+
+
+
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+  <div class="navbar-wrapper" role="navigation"></div>
+  <div id="afterForm"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+       
+        <div id="formInput">
+          <h2>Text Based Information Entry</h2>Title 
+          <input class="form-control" type="title" id="title" value="DNA Purification from Blood or Body Fluids">
+          <br>
+          Select Trigger
+          <form id="triggerForm">
+            <div class="radio">
+              <label><input type="radio" checked=true name="trigger" id="qrCodeSelect" >QR Code</label>
+              <br>
+              <label><input type="radio" name="trigger" id="symbolicImage" >Symbolic Image</label>
+            </div>
+
+            <select id="imageSelect" style="visibility: hidden;">
+              <option >biohazard</option>
+              <option >cpr</option>
+              <option >info</option>
+              <option >chef</option>
+              <option >packages</option>
+            </select>
+          </form>
+          <br>
+          Text  
+          <br>
+          <textarea name="text"  class="form-control" rows="18" id="text" placeholder="1. Type text here">1. Preparation of previously unused Reagents. Add 1.2 ml protease solvent into vial of lyophilized protease (store at +4). Add appropriate amount of 96-100% EtOH to Buffers AW1 and AW2 (store at room temp).
+            2. Pipet 20 ul Protease into bottom of a 1.5 ml tube.
+            3. Add 200 ul sample to the tube.
+            4. Add 200 ul Buffer AL to the sample. Mix by pulse-vortexing for 15 s.
+            5. Incubate at 56°C for 10 min. 
+            6. Briefly centrifuge tube to remove drops from the inside of the lid.
+            7. Add 200 ul EtOH (96-100%) to the sample, and mix again by pulse-vortexing for 15 s. After mixing, briefly centrifuge tube to remove drops from inside of the lid. 
+            8. Carefully apply the mixture from Step 7 to the QIAamp Mini spin column (in a 2 ml collection tube) without wetting the rim. Close the cap and spin at 6k x g for 1 min. 
+            9. Place the spin column in a clean 2 ml collection tube and discard the tube containing the filtrate. 
+            10. Carefully open spin column and add 500 ul Buffer AW1 w/o wetting rim. Close and spin at 6k x g for 1 min.
+            11. Place the spin column in a clean 2 ml collection tube and discard the tube containing the filtrate. 
+            12. Carefully open spin column and add 500 ul Buffer AW2 w/o wetting rim. Close and spin at full speed (20k x g) for 1 min.
+            13. Place the spin column in a clean 2 ml collection tube and discard the tube containing the filtrate. Spin again at full speed (20k x g) for 3 min. 
+            14. Place the spin column in a clean 1.5 ml microcentrifuge tube and discard the tube containing the filtrate. 
+            15. Carefully open and add 200 ul Buffer AE, incubate at room temp for 1 min, and then spin down at 6k x g for 1 min. 
+            16. DNA extraction complete.</textarea><br> 
+
+
+            
+
+
+            <br><br><br>
+            <input type="submit" class="btn btn-primary" value="Submit" onclick="getProtocol()">
+          </div>
+          
+        </div>
+        
+        
+        <div class="col-md-6">
+          
+
+          <div id="helpText">
+            <p>Here is a simple data entry tool where you can enter a linear sequence of information that you'd like displayed on Glass.
+              <br><br>
+              Glass will show the first step of your instructions as soon as you look at a visual cue, which can either be a QR code associated with your instructions or an image. Select which visual cue to use. Once you submit, you can download and save the image.
+              <br><br>
+              Here you will enter the sequential information. Each step should start with the step number, a period, and the step then a new line and the next step.
+              <br><br>
+              If you'd like Glass to set a timer on a particular step, use this format on that step: #. step text <code>{timer: description of timer, number of seconds} </code>
+            </p>
+
+          </div>
+          <br> 
+          <div id="addImageDiv">
+            <div id ="addImageArea"></div>
+            <input id="addImage" type="button" class="btn btn-default" value="Add Image"/>
+          </div>
+
+        </div>
+
+      </div>
+
+      <script src="bootstrap/js/bootstrap.min.js"></script>
+    </body>
+    </html>

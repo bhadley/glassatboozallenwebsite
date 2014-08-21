@@ -1,0 +1,28 @@
+
+
+
+#forDebugging {
+	display:none;
+}
+
+.whiteColor {
+	color:white;
+}
+
+.jumbotron {
+    margin-bottom: 0px;
+    top:0px;
+    left:0px;
+    background-position: 0% 0%;
+    padding-top: 100px;
+    padding-left: 100px;
+    height: 300px;
+    background-color:gray;
+    color:black;
+
+}
+.imghere {
+	 display: block;
+    margin-left: auto;
+    margin-right: auto 
+}

@@ -1,0 +1,46 @@
+
+#info {
+  text-align: center;
+
+}
+
+#introParagraph {
+	width:40%;
+	text-align: center;
+	left:30%;
+	position: relative;
+}
+
+h1, p {
+	color:white;
+}
+
+#introP {
+	color:black;
+}
+
+.blur{
+  opacity:0.4;
+
+}
+
+.bah  {
+   width:40%;
+}
+
+
+
+.col-md-4 {
+     text-align: center;
+}
+
+.footer {
+	padding-top:10px;	
+	top: 100px;
+
+  width: 100%;
+  /* Set the fixed height of the footer here */
+
+  background-color: #222222;
+  position: relative;
+}

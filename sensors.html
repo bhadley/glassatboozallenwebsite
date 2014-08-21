@@ -1,0 +1,449 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="favicon.ico">
+
+  <title>Glass@BoozAllen</title>
+
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <script type='text/javascript' src='js/thermometer.js'></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['gauge']}]}"></script>
+  <script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.17/firebase.js'></script>
+  <!-- Custom styles for this template -->
+  <link href="css/carousel.css" rel="stylesheet">
+  <link href="css/sensors.css" rel="stylesheet">
+  <link href="css/graph.css" rel="stylesheet">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="js/header.js"></script>
+
+  <script src="js/d3.min.js"></script> 
+  <script src="js/d3.layout.min.js"></script> 
+  <script src="js/rickshaw.min.js"></script> 
+  <script language="javascript" src="js/processing.js"></script>
+  <script language="javascript" src="js/init.js"></script>
+  <script language="javascript" src="js/dsp.js"></script>
+
+  <script type="text/javascript">
+
+  var dataToDownload = "";
+  var cleanedData = [];
+  var timex = [];
+  var rawData = [];
+  var rawDataList = [];
+  var rickshawData = [];
+  var stepData = [];
+  var listeningTo = null;
+  var graph;
+
+  var numSteps = 0;
+    // instantiate our graph!
+    var accFBRef = new Firebase("https://labapp.firebaseio.com/accData");
+    var tempFBRef = new Firebase("https://labapp.firebaseio.com/tempData");
+    var humidityFBRef = new Firebase("https://labapp.firebaseio.com/humidityData");
+    var previousTimeVal = 0;
+    var previousAccVal = 0;
+    var lastStepTime = 0;
+    var onStep=0;
+    function resetSteps() {
+      numSteps =0;
+      $("#steps").html(numSteps);
+    }
+    function feature1() {
+      $(".feature1").show();
+      $(".feature1Text").show();
+      $(".feature2").hide();
+      $("#feature3").hide();
+      $("body, html").animate({ 
+        scrollTop: $("#graphs").offset().top 
+      }, 600);
+
+    }
+
+    function feature2() {
+      $(".feature1Text").hide();
+      $(".feature2").show();
+
+      $("body, html").animate({ 
+        scrollTop: $("#graphs").offset().top 
+      }, 600);
+
+
+        // $("#feature3").hide();
+      }
+
+      function feature3() {
+
+        $(".feature1").hide();
+        $(".feature2").hide();
+        $("#feature3").show();
+      }
+
+      var guageChart;
+      var options;
+      var guageData;
+      var g;
+      $(document).ready(function() {
+
+        document.getElementById("sensors").classList.add("active");
+
+        google.load("visualization", "1", {packages:["gauge"]});
+
+        guageData = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Humidity', 100]
+          ]);
+
+        options = {
+          width: 400, height: 120,
+          redFrom: 75, redTo: 100,
+          yellowFrom:25, yellowTo: 75,
+          greenFrom:0, greenTo: 25,
+          minorTicks: 5
+        };
+
+        guageChart = new google.visualization.Gauge(document.getElementById('humidityGauge'));
+
+        guageChart.draw(guageData, options);
+
+        var w = document.getElementById('demo').width;
+        var h = document.getElementById('demo').height;
+
+        g = new ThermometerGuage(document.getElementById('demo'), {
+          w: w,
+          h: h,
+          color: {
+            label: 'black',
+            tickLabel: 'black'
+          },
+          centerTicks: false,
+          majorTicks: 3,
+          minorTicks: 4,
+          max: 100,
+          min:0,
+          scaleTickLabelText: 1.5,
+          scaleLabelText: 1.4,
+          scaleTickWidth: 1.0,
+          unitsLabel: " F"
+        });
+    //var f = document.getElementById("fillTo").value;
+
+    //g.setValue(f);
+
+    $("#feature1").show();
+    $(".feature2").hide();
+    $("#feature3").hide();
+
+    showGraph(1);
+    accFBRef.on('child_added', function(snapshot) {
+
+      if (listeningTo != null){
+        updateGraph(snapshot, listeningTo);
+      }
+    });
+
+
+    humidityFBRef.on('value', function(snapshot) {
+      var num = Math.round(snapshot.val()*10)/10;
+      if (snapshot.val() != null) {
+       guageData.setValue(0, 1, num);
+       guageChart.draw(guageData, options);
+     }
+   });
+
+
+    tempFBRef.on('value', function(snapshot) {
+      tempInC = snapshot.val();
+      tempInF = tempInC * (9/5) + 32
+      g.setValue(tempInF);
+
+
+    });
+
+    function magnitude(x,y,z) {
+      return Math.sqrt(Math.pow(x,2)+Math.pow(y,2)+Math.pow(z,2));
+    }
+
+
+
+    function updateGraph(snapshot, listeningTo){
+
+      var val=false;
+      dataToDownload += snapshot.val() + "%0D%0A";
+      var vals = snapshot.val().split(',');
+
+
+      var mag = magnitude(parseFloat(vals[0]),parseFloat(vals[1]),parseFloat(vals[2]));
+             dif =  Math.pow( mag - parseFloat(previousAccVal)  ,2) * 10 ; /// ( parseFloat(vals[0]) - parseFloat(previousTimeVal) ) ,2)
+
+rickshawData.push({x:parseFloat(vals[0]), y:parseFloat(vals[listeningTo])});
+if (dif > 2){
+  if ((vals[0]-lastStepTime) > 0.5 ) {
+                  //alert("step");
+                  lastStepTime = vals[0];
+                  numSteps+=1;
+                  $("#steps").html(numSteps);
+                   //stepData.push({x:parseFloat(vals[0]), y:parseFloat(dif)});
+                   val = true;
+                 }
+               }
+
+               cleanedData.push(dif);
+               timex.push(vals[0]);
+               stepData.push({x:parseFloat(vals[0]), y:3});
+               if (parseFloat(dif)< 0) {
+                alert("WHAT?");
+              }
+              if ((vals[0]-onStep) > 0.1 ){
+
+                var data = {two: dif};
+                graph.series.addData(data);
+
+
+                var data2 = {one: parseFloat(vals[listeningTo])};
+                graph.series.addData(data2);
+                graph.render();
+                onStep = vals[0];
+                rawDataList.push(parseFloat(vals[listeningTo]));
+                rawData.push({x:parseFloat(vals[0]), y:parseFloat(vals[listeningTo])});
+              }
+              previousTimeVal = vals[0];
+              previousAccVal = mag;
+
+           //}
+
+         }
+       });
+
+function showGraph(axis) {
+  generateGraph();
+  listeningTo = axis;
+  
+}
+
+
+function removeGraph() {
+  $('#chart_container').html(
+    '<div id="y_axis"></div><div id="chart"></div>'
+    );
+
+  accFBRef.remove();
+}
+
+function generateGraph() {
+ removeGraph();
+
+
+ graph = new Rickshaw.Graph( {
+  element: document.getElementById("chart"),
+  width: 600,
+  height: 300,
+  renderer: 'line',
+  min:'-10',
+  max:'10',
+  interpolation: 'linear',
+  series: new Rickshaw.Series.FixedDuration([ { color:'grey', name: 'one' },{name:'two', color:'blue'} ], undefined, {
+    timeInterval: 1,
+    maxDataPoints: 500
+  }) 
+});
+
+
+ var y_ticks = new Rickshaw.Graph.Axis.Y( {
+  graph: graph,
+  orientation: 'left',
+  tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+  element: document.getElementById('y_axis')
+} );
+ graph.render();
+
+}
+
+function downloadData() {
+         // window.location.reload(true);
+         // generateGraph();
+
+         downloadURI("data:," + dataToDownload, "data.txt");
+
+
+         function downloadURI(uri, name) {
+          var link = document.createElement("a");
+          link.download = name;
+          link.href = uri;
+          link.click();
+        }
+
+      }
+
+      function fftData() {
+       var fft = new FFT(256, 44100);
+       alert(rawDataList.slice(0,255).length);
+       fft.forward(rawDataList.slice(0,256));
+       var datah = [];
+       alert(fft.spectrum[0]);
+       for (var i=0; i<256; i++) {
+           // alert();
+           
+           //data.push({x:parseFloat(i), y:parseFloat(i) });
+           if (fft.spectrum[i] != undefined) {
+            datah.push({x:parseFloat(i), y:parseFloat(fft.spectrum[i]) });
+          }
+        }
+
+        
+
+        var graph2 = new Rickshaw.Graph( {
+          element: document.querySelector("#chart2"), 
+          width: 500, 
+          height: 200, 
+          rendered:'line',
+          series: [{
+            color: 'steelblue',
+            data: datah
+          }]
+        });
+
+        graph2.render();
+
+      }
+          //cleanedData.length);
+
+
+
+/*
+var time = new Rickshaw.Fixtures.Time();
+var seconds = time.unit('second');
+
+var xAxis = new Rickshaw.Graph.Axis.Time({
+    graph: graph,
+    timeUnit: seconds
+});
+
+xAxis.render();
+*/         
+//graph.renderer.dotSize = 2;
+
+
+
+
+</script>
+
+
+
+
+</head>
+
+<body>
+
+ <div class="navbar-wrapper"></div>
+
+ <div class="jumbotron">
+  <div class="container">
+    <h1> Data & Processing  </h1>
+    <p>This page demonstrates the capability of streaming and analyzing data in real-time from Glass or a bluetooth sensor.</p>
+            <!--  <p><a class="btn btn-primary btn-lg" onclick="downloadData()" role="button">Download Data &raquo;</a></p>
+            <p><a class="btn btn-primary btn-lg" onclick="fftData()" role="button">FFT Data &raquo;</a></p> -->
+          </div>
+        </div>
+
+        
+        <div class="container">
+
+          <div class="row">
+            <div class="col-md-6">
+              <h2>Stream Data Live from Glass</h2>
+              <p>Glass is equiped with a number of sensors - accelerometer, gyroscope, compass, light. Never before have these sensors been mounted so securely, and comfortably on the head. The possibilities are endless. Click to see a live stream of the acceleromter data.</p>
+              <p><a class="btn btn-default" onclick="feature1()" role="button">View Demo &raquo;</a></p>
+            </div>
+            <div class="col-md-6">
+              <h2>Stream Data Live from a Bluetooth Sensor</h2>
+              <p>Glass is even more powerful because it "plays nicely" with bluetooth sensors, opening up a wide range of potential applications. Click to see a demo live data streamed from a TI SensorTag. </p>
+              <p><a class="btn btn-default" onclick="feature2()" role="button">View Demo &raquo;</a></p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+
+        <div class="graphs" id = "graphs">
+         <div class="row">
+          <h4>Realtime Accelerometer Data</h4>
+          <div class="col-md-9">
+            <div id="chart_container"></div>
+          </div>
+
+          <div class="col-md-3 feature2">
+
+            <div id="gauges">
+              <div id="humidityGauge" style="width: 400px; height: 120px;"></div>
+              <canvas id="demo" height="200" width="200"></canvas><div style="clear:both"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="control">
+
+            <div class="btn-group btn-group-lg buttons">
+              <button type="button" id="xbutton" class="btn btn btn-primary" onclick=showGraph(1)>X</button>
+              <button type="button" class="btn btn btn-primary" onclick=showGraph(2)>Y</button>
+              <button type="button" class="btn btn btn-primary" onclick=showGraph(3)>Z</button>
+            </div>
+            <span class="downloadDataButton">
+              <button type="button" class="btn btn-default btn-lg" onclick=downloadData()> <span class="glyphicon glyphicon-download"></span> Download Data</button>
+            </span>
+            <h3>Steps: <span id="steps" class="label label-default">0</span></h3> <button type="button" id="reset" class="btn btn-default btn-sm" onclick=resetSteps()> <span class="glyphicon glyphicon-refresh"></span></button>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div  class="feature1Text" id="infoText">
+        <div class="row">
+          <h4>Data Acquisition on Glass</h4>
+
+          <div class="col-md-8">
+            <p> To demonstrate the capability of streaming data in realtime from Glass, we built a demo that counts your steps as you walk. On glass, run the app <code> Log Data </code> and you should soon see accelerometer data plotted live on the graph in gray. Select which axis to plot using the x, y, and z buttons. You can download a text file of the data, which is in the following format: <code> elapsed time in seconds, x, y, z </code>. We use a simple approximation algorithm to count your steps (as explained below). This yields periodic peaks, or steps, shown in blue on the plot. Clearly, this is a very simple approximation, but it yields surprisingly accurate results. The true value in this demo is in realizing the capability of the process - data can be streamed from Glass, analyzed and processed, and displayed on a webpage, all in realtime.</p>
+          </div>
+          <div class="col-md-4">
+            <img src="images/pedometer.png" width="400px" class="img-rounded">
+          </div>
+        </div>
+        <h4>Demonstration of Processing Algorithm</h4>
+        <img src="images/dataProcessingPic.png" width="700px" class="img-rounded">
+        <p> This graph demonstrates the simple processing algorithm we use to "clean up" the accelerometer data and identify steps. In gray is the raw accelerometer signal, and in green is the derivative of that signal squared. You can see how this clarifies the peaks. We then use a timed window to extract a step from the signal.</p>
+
+
+      </div>
+
+
+
+
+      
+      <div  class="feature2" id="infoText">
+        <div class="row">
+          <h4>BLE SensorTag & Glass</h4>
+          <div class="col-md-3">
+            <img src="images/sensorTag.jpg" width="200px" class="img-rounded">
+          </div>
+          <div class="col-md-9">
+            <p> To demonstrate the capability of pairing to and streaming data live from a bluetooth low energy sensor, we worked with the <a href="http://www.ti.com/ww/en/wireless_connectivity/sensortag/index.shtml?DCMP=sensortag&HQS=sensortag-bn"  target="_blank">TI SensorTag</a>. This device is about the size of your thumb, and contains the following sensors: IR temperature, humidity, gyroscope, accelerometer, magnetormeter, and barometric pressure. To stream data live from the sensor, run the <code>BLE</code> sensor app on glass, turn the SensorTag on, and tap once to listen to sensors. Data should stream live and start appearing on the graph and gauges. This is just a demo of a capability, but it demonstrates what is possible by pairing Glass with BLE sensors.</p>
+          </div>
+        </div>
+
+      </div>
+      <script src="bootstrap/js/bootstrap.min.js"></script>
+
+    </body>
+    </html>

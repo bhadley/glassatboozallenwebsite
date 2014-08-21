@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="favicon.ico">
+
+  <title>Glass@BoozAllen</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/techSpecs.css" rel="stylesheet">
+  <link href="css/carousel.css" rel="stylesheet">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="js/header.js"></script>
+
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+    document.getElementById("specs").classList.add("active");
+  });
+  </script>
+
+
+</head>
+
+<body>
+ <div class="navbar-wrapper"></div>
+
+
+ <div class="jumbotron whiteColor">
+  <div class="container">
+    <h1>Tech Specs</h1>
+    <p>Wondering how this works? Want to download the code? Then you're in the right place.</p>
+  </div>
+</div>
+
+
+
+<div class="container">
+
+  <div class="row"> <h2>System Architecture</h2>
+
+    <p>
+      One of the main contributions of this project is a modular system architecture that permits rapid development and prototyping. As new features and tools are desired, they may be integrated into the system immediately, thanks to this modular architecture.
+    </p>
+    <p> The system depends on three main components: this website, apps developed for Google Glass, and a database to store information and distribute information. 
+
+
+     <img src="images/systemDiagram.png" class="imghere" width=70% alt="..." class="img-rounded">
+
+     <h2>Components</h2>
+     <ul class="list-group">
+      <li class="list-group-item">Website: HTML, CSS, Javascript, hosted by <a href="https://ghs.bah.com/" target="_blank">BAH GHS</a></li>
+      <li class="list-group-item">Database: <a href="https://www.firebase.com/" target="_blank">Firebase</a> (for text) & <a href="https://www.parse.com/" target="_blank">Parse</a> (for images)</li>
+      <li class="list-group-item">Glass: <a href="https://developers.google.com/glass/develop/index" target="_blank">Glass Development Kit</a> Android Apps</li>
+    </ul>
+    <br>
+    <h2>Glass & Your Smartphone</h2>
+    <p>
+      Glass was designed to pair with your smartphone to access the internet. You should download the <a href="http://www.google.com/glass/help/myglass/app" target="_blank">MyGlass</a> from Google to configure your Glass.
+    </p>
+    <br>
+    <h2>Download the Code</h2>
+    <ul class="list-group">
+      <li class="list-group-item"><a href="https://github.com/bhadley/glassscanner" target="_blank">Information Scanning App</a></li>
+      <li class="list-group-item"><a href="https://github.com/bhadley/GlassSensors" target="_blank">Glass Accelerometer Sensor Logging App</a></li>
+      <li class="list-group-item"><a href="https://github.com/bhadley/glasssensortag" target="_blank">Bluetooth Sensor App</a></li>
+      <li class="list-group-item"><a href="https://github.com/bhadley/glasstuner" target="_blank">Pitch Detection App</a></li>
+      <li class="list-group-item"><a href="#">This Website</a></li>
+    </ul>
+    <br>
+  </div>
+
+</div>
+</div>
+
+
+<div class="footer"></div>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

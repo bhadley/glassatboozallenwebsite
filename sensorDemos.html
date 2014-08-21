@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="favicon.ico">
+
+  <title>Glass@BAH</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/carousel.css" rel="stylesheet">
+  <link href="css/labDemo.css" rel="stylesheet">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="js/header.js"></script>
+</head>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+  document.getElementById("demos").classList.add("active");
+});
+
+
+
+$(function() {
+ $("#tutorial1").hide();
+ $("#tutorial2").hide();
+ $("#tutorial3").hide();
+});
+
+
+function tutorial1() {
+  $("#tutorial1").show();
+  $("#tutorial2").hide();
+  $("#tutorial3").hide();
+  $("body, html").animate({ 
+    scrollTop: $("#tutorial1").offset().top 
+  }, 600);
+}
+
+function tutorial2() {
+
+ $("#tutorial1").hide();
+ $("#tutorial2").show();
+ $("#tutorial3").hide();
+ $("body, html").animate({ 
+  scrollTop: $("#tutorial2").offset().top 
+}, 600);
+}
+
+function tutorial3() {
+
+  $("#tutorial1").hide();
+  $("#tutorial2").hide();
+  $("#tutorial3").show();
+  $("body, html").animate({ 
+    scrollTop: $("#tutorial3").offset().top 
+  }, 600);
+}
+
+
+
+
+</script>
+
+<body>
+ <div class="navbar-wrapper"></div>
+ <div class="container">
+  <h1>Sensor Demos</h1>
+  <div class="row">
+    <div class="col-md-5">
+      <img src="images/dataProcessingPic.png" class="img-rounded" width="100%">
+    </div>
+    <div class="col-md-6">
+      <p>Glass is equiped with a number of sensors that can help apps extract meaningful information to the user in real-time. These sensors include: front facing camera, microphone, accelerometer, gyroscope, and compass. We explored these sensors, and demonstrate examples of how data streamed in real-time can potentially enhance the user's experience.</p>
+    </div>
+  </div>
+</div>
+
+<br><br>
+
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-4">
+
+      <h3>Wonder if you're singing in tune?</h3>
+      <p><i>We demonstrate here the capability of processing an audio signal in real-time on Glass.</i></p>
+
+    </div>
+    <div class="col-md-4">
+      <h3>Simple Pedometer</h3>
+      <p><i>You can use our tool to stream accelerometer data live from Glass, and even process this data in realtime to count the steps taken by the Glass wearer. </i> </p>
+    </div>
+
+    <div class="col-md-4">
+      <h3>Can Glass Monitor Your Heartbeat?</h3>
+      <p><i> Maybe! We've conducted some preliminary testing that indicates small body vibrations such as those caused by the beating of your heart are perceived in a regular pattern by sensors on Glass.</i></p>
+
+    </div>
+  </div>
+
+  <div class="row">
+   <div class="col-md-4">
+     <p><a class="btn btn-default" onclick="tutorial1()" role="button">View Demo &raquo;</a></p>
+   </div>
+   <div class="col-md-4">
+     <p><a class="btn btn-default" href='sensors.html' role="button">View Demo &raquo;</a></p>
+   </div>
+   <div class="col-md-4">
+     <p><a class="btn btn-default" onclick="tutorial3()" role="button">Find out more &raquo;</a></p>
+   </div>
+ </div>
+</div>
+
+<div id="tutorial1"> 
+ <hr class="featurette-divider">
+ <h1> Tuner Demo</h1>
+ <br>
+ <div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <ol class="list-group">
+        <li class="list-group-item">
+          <p> Open the <code>Tuner</code> app on Glass</p>
+        </li>
+        <li class="list-group-item">
+          <p>Sing or play a pitch. This online <a href="http://www.seventhstring.com/tuningfork/tuningfork.html"  target="_blank">Tuning Fork</a> is also a good place to play specific pitches to test the app.</p>
+        </li>
+        <li class="list-group-item">
+          <p> Glass processes the audio through its microhpone in real-time.</p>
+          <h4> Display Components</h4>
+          <img src="images/tuner.png"  width="300"> 
+          <ul> 
+            <li>Histogram: The audio signal is processed using an FFT, and the resulting histogram of frequencies is shown on the screen. </li>
+            <li>Frequency: We then extract the fundamental frequency, displayed to the right of the histogram. </li>
+            <li>Note: We then match this frequency to the closest "note" (tuned to A=440), and display it in the top right, including the octave. </li>
+            <li>Sharp or Flat: The distance the recorded frequency is from the theoretical frequency of this matched note is indicated below, "-" for flat, "+" for sharp. </li>
+            <li>Half Circle: Intonation is also displayed visually in the half circle to the left, the arm pointed up is perfectly in tune, to the left is left and to the right is sharp.</li>
+          </ul>
+
+        </li>
+      </ol>
+    </div>
+    <p>This app demonstrates the capability of processing a signal in real-time on Glass, and displaying meaningful information to the user. The app is not refined, for example certain pitches will not be recognized and the intonation might be slightly innacurate. However, our goal was to create a demonstration of a capability, not a product. We hope you'll be inspired by the capability you see here, and think about what else is possible.</p>
+
+  </div>
+</div>
+<hr class="featurette-divider">
+<hr class="featurette-divider">
+</div>
+<!-- end of tutorial 1-->
+
+<div id="tutorial2"> 
+ <hr class="featurette-divider">
+ <h1> Demo of Saving Information for a Machine</h1>
+ <p>This tutorial demonstrates how you can use the text information tool to save safety information for the PCR (DNA amplifier) machine common in many labs. We'll be using as reference the safety information provided <a href="http://www.uvm.edu/~esf/pcr_safety.pdf"  target="_blank">here</a>.
+ </p> 
+ <div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <ol class="list-group">
+        <li class="list-group-item">
+          <p> Go to <a href="basicInput.html" target="_blank">this page</a>, which is where you'll enter the information into our system.
+          </p>
+        </li>
+        <li class="list-group-item">
+          <p>Enter a title for this information, such as "PCR Safety Information". The image trigger is the image that Glass will associate with this protocol. Select qr code, which is what you'll later print out and tape to the machine.</p>
+        </li>
+        <li class="list-group-item">
+          <p>Copy and paste the following series of operating instructions and safety information into the text input. </code></p>
+          <div class="protocolText">
+           1. Acrylamide/Acetamide: No skin contact is permitted. Wear gloves whil handling acrylamide materials. <br>
+           2. Butanol: No skin contact is allowed. Use gloves made of butyl, viton, or teglon for prolonged exposure (8+hrs) or neoprene for 4hr exposures.<br>
+           3. Chloroform: Chlorogorm is used in DNA extractions. Sometimes the extractions use equal parts phenol and chloroform. If so, ensure tha tthe requirements for phenol are also met. All procedures should be conducted inside a chamical fume hood, gloves should be worn. <br>
+           4. Phenol: Phenol can cuase severe burns to the skin, thus no skin contact is allowed. Glove material should be made of viton or saranex for 8hr exposures and butyl, neoprene, or teflon for 4hr exposures. Eye goggles/face shield should also be worn.<br>
+         </div>
+         <li class="list-group-item">
+          <p>Your information should now be ready, click <code> Submit </code> to save it to our database. </p>
+        </li>
+        <li class="list-group-item">
+          <p>You will then see the QR code you can use to pull up this protocol with Google Glass. Click the <code> Download Image </code> link to download and save it to your computer. You can print this, laminate it, and tape it to the PCR machine. Now grab your Google Glass, and head to the lab! </p>
+          <img src="images/submissionSuccess.png" width="300">
+        </li>
+        <li class="list-group-item">
+          <p>Put Glass on and ensure it's awake. On the Glass homescreen, say "ok glass", then "My Scan". This will launch the camera activity, and you will see what Glass sees in the screen. Now look at the qr code you downloaded. It will be recognized instantly, and Glass will chime cheerfully. 
+          </li>
+          <li class="list-group-item">
+            <p>You'll then momentarily see a "Loading..." screen, while Glass downloads the data from the database. Soon, the first piece of safety information will be displayed. Continue to the next piece by rotating your head right, or tapping Glass.<p>
+              <div class="row">
+               <div class="col-md-6">
+                <img src="images/safetyInfo2.png" height="200" width="358">
+                <br> 
+              </div>
+              <div class="col-md-6">
+                <img src="images/safetyInfo1.png" height="200" width="370">
+                <br>
+                s
+              </div>
+            </div> 
+          </li>
+          <li class="list-group-item">
+            <p>That's it! This demonstrates how any set of information can be saved and displayed to Glass, not just instructions.
+            </li>
+
+          </ol>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <div id="tutorial3">
+    <p> Coming Soon </p>
+  </div>
+
+
+
+
+                <script src="bootstrap/js/bootstrap.min.js"></script>
+              </body>
+              </html>
